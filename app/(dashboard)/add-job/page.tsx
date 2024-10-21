@@ -1,5 +1,5 @@
 import React from 'react'
-// import CreateJobForm from '@/components/CreateJobForm';
+import CreateJobForm from '@/components/CreateJobForm';
 import {
   dehydrate,
   HydrationBoundary,
@@ -7,13 +7,12 @@ import {
 } from '@tanstack/react-query';
 
 const AddJobPage = () => {
-    // const queryClient = new QueryClient();
+    const queryClient = new QueryClient();
 
   return (
-    <div>AddJobPage</div>
-    // <HydrationBoundary state={dehydrate(queryClient)}>
-    //   {/* <CreateJobForm /> */}
-    // </HydrationBoundary>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <CreateJobForm />
+    </HydrationBoundary>
   )
 }
 
