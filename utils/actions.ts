@@ -10,6 +10,9 @@ import { Prisma } from '@prisma/client';
 
 function authenticateAndRedirect(): string {
   const { userId } = auth();
+
+  console.log("userId", userId);
+
   if (!userId) {
     redirect('/');
   }
@@ -47,7 +50,9 @@ type GetAllJobsActionTypes = {
   export async function getAllJobsAction({
     search,
     jobStatus,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     page = 1,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     limit = 10,
   }: GetAllJobsActionTypes): Promise<{
     jobs: JobType[];
@@ -110,6 +115,51 @@ type GetAllJobsActionTypes = {
         },
       });
       return job;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      return null;
+    }
+  }
+
+  export async function getSingleJobAction(id: string): Promise<JobType | null> {
+    let job: JobType | null = null;
+    const userId = authenticateAndRedirect();
+  
+    try {
+      job = await prisma.job.findUnique({
+        where: {
+          id,
+          clerkId: userId,
+        },
+      });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      job = null;
+    }
+    if (!job) {
+      redirect('/jobs');
+    }
+    return job;
+  }
+
+  export async function updateJobAction(
+    id: string,
+    values: CreateAndEditJobType
+  ): Promise<JobType | null> {
+    const userId = authenticateAndRedirect();
+  
+    try {
+      const job: JobType = await prisma.job.update({
+        where: {
+          id,
+          clerkId: userId,
+        },
+        data: {
+          ...values,
+        },
+      });
+      return job;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return null;
     }
