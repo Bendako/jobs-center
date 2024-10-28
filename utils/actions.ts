@@ -224,6 +224,7 @@ type GetAllJobsActionTypes = {
 
     console.log(jobs)
 
+    // eslint-disable-next-line prefer-const
     let applicationsPerMonth = jobs.reduce((acc, job) => {
       const date = dayjs(job.createdAt).format('MMM YY');
 

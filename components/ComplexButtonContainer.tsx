@@ -30,6 +30,7 @@ const ComplexButtonContainer = ({ currentPage, totalPages }: ButtonContainerProp
           page: String(page),
         };
     
+        // eslint-disable-next-line prefer-const
         let params = new URLSearchParams(defaultParams);
     
         router.push(`${pathname}?${params.toString()}`);

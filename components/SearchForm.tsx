@@ -24,6 +24,7 @@ const SearchContainer = () => {
   const pathname = usePathname();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // eslint-disable-next-line prefer-const
     let params = new URLSearchParams();
 
     const formData = new FormData(e.currentTarget);
